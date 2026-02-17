@@ -78,7 +78,7 @@ public static class SapSuccessFactors
 
         var client = RestClientConstructor(clientOptions);
 
-        var resource = GetResourcePath(fullUrl, connection.ApiServer);
+        var resource = GetResourcePath(fullUrl);
 
         var request = new RestRequest(resource, GetRestSharpMethod(input.RequestMethod));
 
