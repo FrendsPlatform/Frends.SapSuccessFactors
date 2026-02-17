@@ -13,21 +13,21 @@ public class Options
     /// </summary>
     /// <example>30</example>
     [DefaultValue(30)]
-    public int ConnectionTimeoutSeconds { get; set; }
+    public int ConnectionTimeoutSeconds { get; set; } = 30;
 
     /// <summary>
     /// Allow invalid SSL certificates
     /// </summary>
     /// <example>false</example>
     [DefaultValue(false)]
-    public bool AllowInvalidCertificate { get; set; }
+    public bool AllowInvalidCertificate { get; set; } = false;
 
     /// <summary>
     /// Follow HTTP redirects
     /// </summary>
     /// <example>true</example>
     [DefaultValue(true)]
-    public bool FollowRedirects { get; set; }
+    public bool FollowRedirects { get; set; } = true;
 
     /// <summary>
     /// Whether to throw an error on failure.

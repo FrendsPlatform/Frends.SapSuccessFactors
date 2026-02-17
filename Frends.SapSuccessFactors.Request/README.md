@@ -2,7 +2,7 @@
 
 Frends Task for executing SAP SuccessFactors requests
 
-[![Request_build](https://github.com/FrendsPlatform/Frends.SapSuccessFactors/actions/workflows/Request_build_and_test_on_main.yml/badge.svg)](https://github.com/FrendsPlatform/Frends.SapSuccessFactors/actions/workflows/Request_build_and_test_on_main.yml)
+[![Request_build](https://github.com/FrendsPlatform/Frends.SapSuccessFactors/actions/workflows/Request_test_on_main.yml/badge.svg)](https://github.com/FrendsPlatform/Frends.SapSuccessFactors/actions/workflows/Request_test_on_main.yml)
 ![Coverage](https://app-github-custom-badges.azurewebsites.net/Badge?key=FrendsPlatform/Frends.SapSuccessFactors/Frends.SapSuccessFactors.Request|main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 

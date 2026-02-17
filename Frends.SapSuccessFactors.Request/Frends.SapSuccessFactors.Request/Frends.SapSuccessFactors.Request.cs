@@ -61,7 +61,11 @@ public static class SapSuccessFactors
 
         var fullUrl = GetRequestUrl(input, connection);
 
-        var clientOptions = new RestClientOptions(connection.ApiServer)
+        var baseUrl = input.UrlType == UrlType.Custom
+            ? new Uri(fullUrl).GetLeftPart(UriPartial.Authority)
+            : connection.ApiServer;
+
+        var clientOptions = new RestClientOptions(baseUrl)
         {
             Timeout = TimeSpan.FromSeconds(options.ConnectionTimeoutSeconds),
             FollowRedirects = options.FollowRedirects,
@@ -97,7 +101,7 @@ public static class SapSuccessFactors
         if ((input.RequestMethod == RequestMethod.POST || input.RequestMethod == RequestMethod.PUT || input.RequestMethod == RequestMethod.PATCH)
             && !string.IsNullOrWhiteSpace(input.Body))
         {
-            request.AddJsonBody(input.Body);
+            request.AddStringBody(input.Body, ContentType.Json);
         }
 
         var response = await client.ExecuteAsync(request, cancellationToken);
@@ -111,7 +115,8 @@ public static class SapSuccessFactors
         }
 
         var headers = response.Headers?
-            .ToDictionary(h => h.Name ?? string.Empty, h => h.Value?.ToString() ?? string.Empty)
+            .GroupBy(h => h.Name ?? string.Empty)
+            .ToDictionary(g => g.Key, g => string.Join(", ", g.Select(h => h.Value?.ToString() ?? string.Empty)))
             ?? new Dictionary<string, string>();
 
         if (!response.IsSuccessful)
@@ -200,7 +205,7 @@ public static class SapSuccessFactors
         return baseUrl;
     }
 
-    private static string GetResourcePath(string fullUrl, string baseUrl)
+    private static string GetResourcePath(string fullUrl)
     {
         if (fullUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase))
         {
@@ -250,15 +255,15 @@ public static class SapSuccessFactors
                 var errorNode = jToken["error"];
                 if (errorNode != null)
                 {
-                    // Try V4 format
-                    var message = errorNode["message"]?.ToString();
-                    if (!string.IsNullOrWhiteSpace(message))
-                        return message;
-
                     // Try V2 format
                     var messageValue = errorNode["message"]?["value"]?.ToString();
                     if (!string.IsNullOrWhiteSpace(messageValue))
                         return messageValue;
+
+                    // Try V2 format
+                    var message = errorNode["message"]?.ToString();
+                    if (!string.IsNullOrWhiteSpace(message))
+                        return message;
                 }
             }
         }
