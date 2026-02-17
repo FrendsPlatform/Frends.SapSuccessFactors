@@ -20,9 +20,11 @@ public static class SapSuccessFactors
     /// <summary>
     /// Factory for creating REST clients. Can be overridden in tests to provide a mock client.
     /// </summary>
+#pragma warning disable CA2211 // Non-constant fields should not be visible
 #pragma warning disable SA1401 // Fields should be private
     public static Func<RestClientOptions, IRestClient> RestClientConstructor = options => new RestClient(options);
 #pragma warning restore SA1401 // Fields should be private
+#pragma warning restore CA2211 // Non-constant fields should not be visible
 
     /// <summary>
     /// Frends Task for executing SAP SuccessFactors requests.
@@ -133,32 +135,32 @@ public static class SapSuccessFactors
         if (input.UrlType == UrlType.Builder)
         {
             if (string.IsNullOrWhiteSpace(connection.ApiServer))
-                throw new ArgumentNullException(nameof(connection.ApiServer), "API Server is required when using URL Builder mode");
+                throw new ArgumentNullException(nameof(connection), "API Server is required when using URL Builder mode");
 
             if (string.IsNullOrWhiteSpace(input.Endpoint))
-                throw new ArgumentNullException(nameof(input.Endpoint), "Endpoint is required when using URL Builder mode");
+                throw new ArgumentNullException(nameof(input), "Endpoint is required when using URL Builder mode");
         }
         else if (input.UrlType == UrlType.Custom)
         {
             if (string.IsNullOrWhiteSpace(input.CustomUrl))
-                throw new ArgumentNullException(nameof(input.CustomUrl), "Custom URL is required when using Custom URL mode");
+                throw new ArgumentNullException(nameof(input), "Custom URL is required when using Custom URL mode");
 
             if (!Uri.TryCreate(input.CustomUrl, UriKind.Absolute, out _))
-                throw new ArgumentException("Custom URL is not a valid absolute URL", nameof(input.CustomUrl));
+                throw new ArgumentException("Custom URL is not a valid absolute URL", nameof(input));
         }
 
         if (connection.Authentication == Authentication.Basic)
         {
             if (string.IsNullOrWhiteSpace(connection.Username))
-                throw new ArgumentNullException(nameof(connection.Username), "Username is required for Basic authentication");
+                throw new ArgumentNullException(nameof(connection), "Username is required for Basic authentication");
             if (string.IsNullOrWhiteSpace(connection.Password))
-                throw new ArgumentNullException(nameof(connection.Password), "Password is required for Basic authentication");
+                throw new ArgumentNullException(nameof(connection), "Password is required for Basic authentication");
         }
 
         if (connection.Authentication == Authentication.OAuth)
         {
             if (string.IsNullOrWhiteSpace(connection.AccessToken))
-                throw new ArgumentNullException(nameof(connection.AccessToken), "Access Token is required for OAuth authentication");
+                throw new ArgumentNullException(nameof(connection), "Access Token is required for OAuth authentication");
         }
     }
 
