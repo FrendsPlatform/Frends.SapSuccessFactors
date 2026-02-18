@@ -34,4 +34,8 @@
         <Content Include="../CHANGELOG.md" PackagePath="/" Pack="true" />
         <AdditionalFiles Include="FrendsTaskMetadata.json" PackagePath="/" Pack="true" />
     </ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Frends.SapSuccessFactors.Request.Tests" />
+	</ItemGroup>
 </Project>

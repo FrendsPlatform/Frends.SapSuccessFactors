@@ -20,11 +20,9 @@ public static class SapSuccessFactors
     /// <summary>
     /// Factory for creating REST clients. Can be overridden in tests to provide a mock client.
     /// </summary>
-#pragma warning disable CA2211 // Non-constant fields should not be visible
 #pragma warning disable SA1401 // Fields should be private
-    public static Func<RestClientOptions, IRestClient> RestClientConstructor = options => new RestClient(options);
+    internal static Func<RestClientOptions, IRestClient> RestClientConstructor = options => new RestClient(options);
 #pragma warning restore SA1401 // Fields should be private
-#pragma warning restore CA2211 // Non-constant fields should not be visible
 
     /// <summary>
     /// Frends Task for executing SAP SuccessFactors requests.

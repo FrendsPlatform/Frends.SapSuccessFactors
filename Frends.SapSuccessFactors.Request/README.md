@@ -32,3 +32,7 @@ Run the tests
 
 ### StyleCop.Analyzers Version
 This project uses StyleCop.Analyzers 1.2.0-beta.556, as recommended by the author, to get the latest fixes and improvements not available in the last stable release.
+
+### Third-party licenses
+RestSharp used for HTTP client implementation is licensed under the Apache-2.0 license.
+The full license text and source code can be found at https://github.com/restsharp/RestSharp.
