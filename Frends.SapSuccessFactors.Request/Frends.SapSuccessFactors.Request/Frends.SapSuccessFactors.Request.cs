@@ -33,7 +33,7 @@ public static class SapSuccessFactors
     /// <param name="connection">Connection parameters.</param>
     /// <param name="options">Options.</param>
     /// <param name="cancellationToken">Frends cancellation token.</param>
-    /// <returns>Object { bool Success, dynamic Data, string ErrorMessage, int StatusCode, Dictionary&lt;string, string&gt; Headers }</returns>
+    /// <returns>Object { bool Success, dynamic Data, int StatusCode, Dictionary&lt;string, string&gt; Headers, Error Error }</returns>
     public static async Task<Result> Request(
         [PropertyTab] Input input,
         [PropertyTab] Connection connection,
@@ -83,9 +83,6 @@ public static class SapSuccessFactors
 
         AddAuthentication(request, connection);
 
-        request.AddHeader("Accept", "application/json");
-        request.AddHeader("Content-Type", "application/json");
-
         if (input.Headers != null && input.Headers.Length > 0)
         {
             foreach (var header in input.Headers)
@@ -100,7 +97,7 @@ public static class SapSuccessFactors
         if ((input.RequestMethod == RequestMethod.POST || input.RequestMethod == RequestMethod.PUT || input.RequestMethod == RequestMethod.PATCH)
             && !string.IsNullOrWhiteSpace(input.Body))
         {
-            request.AddStringBody(input.Body, ContentType.Json);
+            request.AddJsonBody(input.Body);
         }
 
         var response = await client.ExecuteAsync(request, cancellationToken);
@@ -234,7 +231,7 @@ public static class SapSuccessFactors
         {
             case Authentication.Basic:
                 var basicAuth = Convert.ToBase64String(
-                    System.Text.Encoding.ASCII.GetBytes($"{connection.Username}:{connection.Password}"));
+                    System.Text.Encoding.UTF8.GetBytes($"{connection.Username}:{connection.Password}"));
 
                 request.AddHeader("Authorization", $"Basic {basicAuth}");
                 break;
@@ -259,7 +256,7 @@ public static class SapSuccessFactors
                     if (!string.IsNullOrWhiteSpace(messageValue))
                         return messageValue;
 
-                    // Try V2 format
+                    // Try V4 format
                     var message = errorNode["message"]?.ToString();
                     if (!string.IsNullOrWhiteSpace(message))
                         return message;
