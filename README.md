@@ -1,11 +1,10 @@
-[//]: # (Update this file with actual SystemName and ActionName)
-# Frends.{SystemName}
+# Frends.SapSuccessFactors.Request
 
-Frends tasks for {SystemName} related operations.
+Frends tasks for Frends.SapSuccessFactors.Request related operations.
 
 # Tasks
 
-- [Frends.{SystemName}.{ActionName}](Frends.{SystemName}.{ActionName}/README.md)
+- [Frends.SapSuccessFactors.Request](Frends.SapSuccessFactors.Request/README.md)
 
 # Contributing
 
