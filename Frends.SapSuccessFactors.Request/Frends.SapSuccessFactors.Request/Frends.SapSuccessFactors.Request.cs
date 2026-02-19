@@ -21,9 +21,7 @@ public static class SapSuccessFactors
     /// Factory for creating REST clients. Can be overridden in tests to provide a mock client.
     /// Internal visibility allows test projects to access it via InternalsVisibleTo attribute.
     /// </summary>
-#pragma warning disable SA1401 // Fields should be private
-    internal static Func<RestClientOptions, IRestClient> RestClientConstructor = options => new RestClient(options);
-#pragma warning restore SA1401 // Fields should be private
+    internal static Func<RestClientOptions, IRestClient> RestClientConstructor { get; set; } = options => new RestClient(options);
 
     /// <summary>
     /// Frends Task for executing SAP SuccessFactors requests.
