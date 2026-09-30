@@ -254,7 +254,7 @@ public class FunctionalTests
     [Test]
     public void Request_MissingUsername_ThrowsArgumentNullException()
     {
-        var ex = Assert.ThrowsAsync<Exception>(async () =>
+        var ex = Assert.ThrowsAsync<Exception>((Func<Task>)(async () =>
             await SapSuccessFactors.Request(
                 new Input
                 {
@@ -272,7 +272,7 @@ public class FunctionalTests
                     Password = "password",
                 },
                 new Options { ThrowErrorOnFailure = true },
-                CancellationToken.None));
+                CancellationToken.None)));
 
         Assert.That(ex, Is.Not.Null);
         Assert.That(ex.Message, Does.Contain("Username"));
